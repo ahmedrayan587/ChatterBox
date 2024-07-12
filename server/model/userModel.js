@@ -1,9 +1,9 @@
 import mongoose from "mongoose";
 
 const userSchema = new mongoose.Schema({
-  /*image: {
-    type: Image,
-  },*/
+  image: {
+    type: String,
+  },
   username: {
     type: String,
     required: true,
@@ -24,5 +24,4 @@ const userSchema = new mongoose.Schema({
   },
 });
 
-const User = mongoose.model("User", userSchema);
-export default User;
+export default mongoose.model("User", userSchema);

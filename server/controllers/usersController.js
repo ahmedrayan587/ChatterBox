@@ -1,9 +1,10 @@
 import User from "../model/userModel.js";
 import bcrypt from "bcrypt";
 
-export const register = async (req, res, next) => {
+export async function register(req, res, next) {
   try {
-    const { username, email, password } = req.body;
+    /*image should sent as a string in base64 */
+    const { image, username, email, password } = req.body;
 
     const usernameCheck = await User.findOne({ username });
     if (usernameCheck)
@@ -14,6 +15,7 @@ export const register = async (req, res, next) => {
 
     const hashedPassword = await bcrypt.hash(password, 10);
     const user = await User.create({
+      image,
       email,
       username,
       password: hashedPassword,
@@ -26,9 +28,9 @@ export const register = async (req, res, next) => {
   } catch (error) {
     next(error);
   }
-};
+}
 
-export const login = async (req, res, next) => {
+export async function login(req, res, next) {
   try {
     const { username, password } = req.body;
 
@@ -43,4 +45,18 @@ export const login = async (req, res, next) => {
   } catch (error) {
     next(error);
   }
-};
+}
+
+export async function getAllUsers(req, res, next) {
+  try {
+    const users = await User.find({ _id: { $ne: req.params.id } }).select([
+      "_id",
+      "image",
+      "username",
+      "email",
+    ]);
+    return res.json({ status: 200, users });
+  } catch (error) {
+    next(error);
+  }
+}
