@@ -4,6 +4,7 @@ import mongoose from "mongoose";
 import userRoutes from "./routes/userRoutes.js";
 import messageRoutes from "./routes/messageRoutes.js";
 import { configDotenv } from "dotenv";
+import { Server } from "socket.io";
 
 const app = express();
 configDotenv();
@@ -20,6 +21,30 @@ mongoose
   .catch((err) => {
     console.log(err.message);
   });
-app.listen(process.env.PORT, () => {
+const server = app.listen(process.env.PORT, () => {
   console.log(`listening on port ${process.env.PORT}`);
+});
+
+//socket.io code to make a realTime chat.
+const io = new Server(server, {
+  cors: {
+    origin: "http://localhost:5000",
+    credentials: true,
+  },
+});
+
+global.onlineUsers = new Map();
+
+io.on("connection", (socket) => {
+  global.chatSocket = socket;
+  socket.on("add-user", (userId) => {
+    global.onlineUsers.set(userId, socket.id);
+  });
+  socket.on("send-message", (data) => {
+    // Corrected the event name to "send-message"
+    const sendUserSocket = global.onlineUsers.get(data.to);
+    if (sendUserSocket) {
+      socket.to(sendUserSocket).emit("msg-receive", data.message); // Corrected "msg-recieve" to "msg-receive"
+    }
+  });
 });
