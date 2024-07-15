@@ -6,6 +6,7 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import SignUp from './pages/SignUp';
 import Login from './pages/Login';
+import Home from './pages/Home';
 
 export default function App() {
   const [userID,setUserID] = useState("");
@@ -33,6 +34,7 @@ export default function App() {
         <Routes>
           <Route path='/' element={<SignUp />} />
           <Route path='/login' element={<Login />} />
+          <Route path='/home' element={<Home />} />
         </Routes>
       </Router>
     </>

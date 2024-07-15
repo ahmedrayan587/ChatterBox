@@ -31,12 +31,19 @@ export default function FormInputFile({name,setValues,type}) {
       <span className="user">{fileName==""?name:fileName}</span>
     </label>
     {type=='image'?<input type="file" id={name} name={name} accept='image/*' onChange={(e)=>{
-        setValues(e.target.files[0]);
-        setFileName(e.target.files[0].name)
+            const file = e.target.files[0];
+            const reader = new FileReader();
+            reader.onloadend = () => {
+            setValues(reader.result);
+            };
+            if (file) {
+            reader.readAsDataURL(file);
+            }
+            setFileName(e.target.files[0].name)
         }} />:type=='video'?
         <input type="file" id={name} name={name} accept='video/*' onChange={(e)=>{
-        setValues(e.target.files[0]);
-        setFileName(e.target.files[0].name)
+            setValues(e.target.files[0]);
+            setFileName(e.target.files[0].name)
         }} />:
         <input type="file" id={name} name={name} onChange={(e)=>{
             setValues(e.target.files[0]);

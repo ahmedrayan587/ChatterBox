@@ -8,13 +8,16 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import FormInputFile from '../components/Form/FormInputFile';
 import { registerRoute } from '../utils/APIRoutes';
+import { useNavigate } from 'react-router-dom';
+
+
 
 export default function SignUp() {
+  const navigate = useNavigate();
   const [image, setImage] = useState("");
   const [username,setUsername] = useState("");
   const [email,setEmail] = useState("");
   const [password,setPassword] = useState("");
-
 
 async function fetchData() {
     toast.loading("The process may take few seconds",{
@@ -31,7 +34,7 @@ async function fetchData() {
     });
   try {
     const response = await axios.post(registerRoute, {
-      //image:image.toBase64(),
+      image:image,
       username: username,
       email: email,
       password: password,
@@ -51,7 +54,7 @@ async function fetchData() {
         progress: undefined,
         theme:'light',
       });
-      //Navigate('/login');
+      navigate('/login');
     } else {
       console.error('Error posting piece data:', response);
       toast.dismiss();
