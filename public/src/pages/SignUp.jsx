@@ -58,7 +58,7 @@ async function fetchData() {
     } else {
       console.error('Error posting piece data:', response);
       toast.dismiss();
-      toast.error("Problem during the signup process");
+      toast.error(response.data.msg);
     }
   } catch (error) {
     console.error('Error during post request:', error);

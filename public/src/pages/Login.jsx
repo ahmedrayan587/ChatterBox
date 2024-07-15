@@ -55,7 +55,7 @@ async function fetchData() {
       navigate('/home');
     } else {
       toast.dismiss();
-      toast.error("Incorrect username or password");
+      toast.error(response.data.msg);
       console.error('Error posting piece data:',response);
     }
   } catch (error) {
