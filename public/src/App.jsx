@@ -1,7 +1,40 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import "./App.css"
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
+import Cookies from 'js-cookie';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import SignUp from './pages/SignUp';
+import Login from './pages/Login';
 
 export default function App() {
+  const [userID,setUserID] = useState("");
+  const [username,setUsername] = useState("");
+  
+  useEffect(()=>{
+    Cookies.get('username')&&setUsername(Cookies.get('username'));
+    Cookies.get('userID')&&setUserID(Cookies.get('userID'));
+  },[])
   return (
-    <div>App</div>
+    <>
+    <ToastContainer 
+            position='top-right'
+            autoClose={5000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={true}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+            theme='light'
+          />
+      <Router>
+        <Routes>
+          <Route path='/' element={<SignUp />} />
+          <Route path='/login' element={<Login />} />
+        </Routes>
+      </Router>
+    </>
   )
 }
