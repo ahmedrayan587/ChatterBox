@@ -50,6 +50,7 @@ async function fetchData() {
         theme:'light',
       });
       console.log('Piece data posted successfully:',response);
+      //Cookies.set('userImage', response.data.user.image);
       Cookies.set('username', response.data.user.username);
       Cookies.set('userID', response.data.user._id);
       navigate('/home');

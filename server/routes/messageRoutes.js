@@ -6,5 +6,5 @@ import {
 
 const router = express.Router();
 router.post("/addMessage", addMessage);
-router.get("/getAllMessages/", getAllMessages);
+router.post("/getAllMessages", getAllMessages);
 export default router;
