@@ -5,6 +5,13 @@
     background-color: #f0f2f5;
     border-top: 1px solid #ddd;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    position: relative;
+  }
+
+  .emoji-picker {
+    position: absolute;
+    bottom: 60px;
+    left: 0;
   }
   
   .emoji {
@@ -22,3 +29,4 @@
   .message-input:focus {
     outline: none;
   }
+  
