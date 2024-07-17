@@ -11,9 +11,11 @@
 .sidebar-container{
     border-right: 1px solid #ddd;
     grid-area: 1/1/10/2;
+    overflow-y: scroll;
 }
 .main-container{
     grid-area: 2/2/9/3;
+    overflow-y: scroll;
 }
 .bottom-container{
     grid-area: 9/2/10/3;

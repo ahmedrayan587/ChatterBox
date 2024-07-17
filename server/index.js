@@ -28,7 +28,7 @@ const server = app.listen(process.env.PORT, () => {
 //socket.io code to make a realTime chat.
 const io = new Server(server, {
   cors: {
-    origin: "http://localhost:5000",
+    origin: "http://localhost:5173",
     credentials: true,
   },
 });

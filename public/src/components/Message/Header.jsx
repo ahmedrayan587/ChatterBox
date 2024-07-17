@@ -1,13 +1,8 @@
-import React, { useState } from 'react'
+import React from 'react'
 import './Header.css'
 
-export default function Header({image,name,messages}) {
-    const [searchQuery, setSearchQuery] = useState('');
-
-  
-    const filteredChatList = messages.filter(item =>
-      item.name.toLowerCase().includes(searchQuery.toLowerCase())
-    );
+export default function Header({image,name,setSearchQuery}) {
+    
     return (
         <div className="profile">
           <div className="profile-image">
@@ -18,7 +13,7 @@ export default function Header({image,name,messages}) {
           </div>
           <div className="profile-actions">
            <div className="search-header">
-                <input type="text" placeholder="Search" value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} />
+                <input type="text" placeholder="Search" onChange={(e) => setSearchQuery(e.target.value)} />
             </div>
           </div>
         </div>
