@@ -12,10 +12,12 @@
     border-right: 1px solid #ddd;
     grid-area: 1/1/10/2;
     overflow-y: scroll;
+    overflow-x: hidden;
 }
 .main-container{
     grid-area: 2/2/9/3;
     overflow-y: scroll;
+    overflow-x: hidden;
 }
 .bottom-container{
     grid-area: 9/2/10/3;
@@ -34,6 +36,10 @@
   .search-bar {
     padding: 10px;
     border-bottom: 1px solid #ddd;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
   }
   
   .search-bar input[type="text"] {
@@ -45,7 +51,18 @@
     border-radius: 10px;
     background-color: #f0f2f5;
   }
-  
+
+  .search-bar .update-button{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 30px;
+    width: 30px;
+    border-radius: 50%;
+    border: none;
+    background-color: transparent;
+  }
+
   .chat-list {
     padding: 10px;
     overflow-y: auto;
@@ -103,4 +120,52 @@
     color: #999;
     margin-top: 5px;
     grid-area: date;
+  }
+  @media (max-width:786px) {
+    .home-container{
+      display: flex;
+      justify-content: start;
+      align-items: start;
+      flex-wrap: wrap;
+      flex-direction: row;
+      width: 100%;
+    }
+    .search-header,.search-header input[type="text"]{
+      width: fit-content!important;
+    }
+    .sidebar-container{
+      height: 160px;
+      width: 100%;
+      overflow: hidden;
+    }
+    .sidebar-container .chat-list{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow-y: hidden;
+      overflow-x: scroll;
+      flex-wrap: wrap;
+      flex-direction: column;
+      width: 100%;
+    }
+    .profile {
+      height: 100px;
+      width: 100%;
+    }
+    .main-container{
+      height: calc(100% - 360px);
+      width: 100%;
+    }
+    .bottom-container{
+      width: 100%;
+      height: 100px;
+    }
+    .chat-input{
+      width: 100%;
+    }
+    .chat-text {
+      font-size: 2rem!important;
+      left: 50%!important;
+      display: none;
+    }
   }

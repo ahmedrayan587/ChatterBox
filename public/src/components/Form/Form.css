@@ -28,7 +28,7 @@
     flex-direction: column;
     gap: 20px;
     border-radius: 15px;
-    background-color: wheat!important;
+    background-color: var(--form-background-color)!important;
     box-shadow: 16px 16px 32px #c8c8c8, -16px -16px 32px #fefefe;
     border-radius: 8px;
     padding-bottom: 20px;
@@ -142,7 +142,7 @@
     transform: translateX(0px) translateY(-21px);
     font-size: 0.8em;
     padding: 5px 10px;
-    background: wheat;
+    background: var(--form-background-color);
     letter-spacing: 0.2em;
     color: var(--main-color);
     border: 2px;
@@ -153,7 +153,7 @@
     transform: translateX(0px) translateY(-21px);
     font-size: 0.8em;
     padding: 5px 10px;
-    background: wheat;
+    background: var(--form-background-color);
     letter-spacing: 0.2em;
     color: var(--main-color);
     border: 2px;
@@ -184,7 +184,7 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     border: 1px solid #ced4da;
     border-radius: 5px;
-    background-color: wheat;
+    background-color: var(--form-background-color);
     color: var(--main-color);
     z-index: 2;
   }
@@ -212,7 +212,7 @@
     border-bottom-color: transparent;
   }
   form .button {
-    --color: #00a97f;
+    --color: var(--main-color);
     padding: 0.8em 1.7em;
     background-color: white;
     border-radius: 0.3em;
@@ -222,7 +222,7 @@
     transition: 0.5s;
     font-weight: 600;
     font-size: 17px;
-    border: 1px solid #00a97f;
+    border: 1px solid var(--main-color);
     font-family: inherit;
     text-transform: uppercase;
     color: var(--color);
