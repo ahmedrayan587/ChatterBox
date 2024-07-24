@@ -34,10 +34,9 @@ export default function Sidebar({ userID, setFriendID, setFriendUsername, setFri
       {filteredChatList.map((item, index) => (
           <SidebarItem 
             key={index}
+            userID = {userID}
             image={item.image}
             name={item.username}
-            message={item.message}
-            date={item.date}
             id={item._id}
             setFriendID={setFriendID}
             setFriendUsername={setFriendUsername} 

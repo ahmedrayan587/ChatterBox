@@ -18,6 +18,32 @@ export async function addMessage(req, res, next) {
     next(error);
   }
 }
+
+function formatDate(date) {
+  const options = { month: "short", day: "numeric", year: "numeric" };
+  return date.toLocaleDateString("en-US", options);
+}
+
+function formatTime(date) {
+  return date.toLocaleString("en-US", {
+    hour: "numeric",
+    minute: "numeric",
+    hour12: true,
+  });
+}
+
+function isYesterday(date) {
+  const now = new Date();
+  const yesterday = new Date();
+  yesterday.setDate(now.getDate() - 1);
+
+  return (
+    date.getDate() === yesterday.getDate() &&
+    date.getMonth() === yesterday.getMonth() &&
+    date.getFullYear() === yesterday.getFullYear()
+  );
+}
+
 export async function getAllMessages(req, res, next) {
   try {
     const { from, to } = req.body;
@@ -29,9 +55,16 @@ export async function getAllMessages(req, res, next) {
       })
       .sort({ updatedAt: 1 });
     const projectMessages = messages.map((msg) => {
+      const messageDate = new Date(msg.updatedAt);
+      const formattedDate = isYesterday(messageDate)
+        ? "Yesterday"
+        : formatDate(messageDate);
+      const formattedTime = formatTime(messageDate);
       return {
         fromSelf: msg.sender.toString() === from,
         message: msg.message.text,
+        date: formattedDate,
+        time: formattedTime,
       };
     });
     res.json({ status: 200, projectMessages });

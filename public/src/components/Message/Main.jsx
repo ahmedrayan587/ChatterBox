@@ -34,12 +34,19 @@ export default function Main({ userID, friendID, messages, setMessages }) {
       messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
     }
   }, [messages]);
-
+  let prevDate = null;
   return (
     <div className='main-container'>
-      {messages.map((item, index) => (
-        <Message key={index} message={item.message} fromSelf={item.fromSelf} />
-      ))}
+      {messages.map((item, index) => {
+        const showDate = prevDate !== item.date;
+        prevDate = item.date;
+        return(
+          <React.Fragment key={index}>
+            {showDate && <div className="date-container"><p className="date-separator">{item.date}</p></div>}
+            <Message message={item.message} date={item.date} time={item.time} fromSelf={item.fromSelf} />
+          </React.Fragment>
+        )
+      })}
       <div ref={messagesEndRef} />
     </div>
   );

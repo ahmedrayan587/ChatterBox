@@ -36,7 +36,7 @@ export default function Home() {
     }
 
     socket.on('msg-receive', (message) => {
-      setMessages((prevMessages) => [...prevMessages, { fromSelf: false, message }]);
+      setMessages((prevMessages) => [...prevMessages, { fromSelf: false, message, data: new Date(Date.now()).toLocaleDateString(), time: new Date(Date.now()).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) }]);
     });
 
     return () => {

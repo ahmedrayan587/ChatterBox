@@ -8,14 +8,13 @@ import data from '@emoji-mart/data';
 export default function Bottom({ userID, friendID, socket, setMessages }) {
   const [message, setMessage] = useState('');
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
-
   async function addMessage() {
     const newMessage = {
       from: userID,
       to: friendID,
       message: message
     };
-    setMessages((prevMessages) => [...prevMessages, { fromSelf: true, message }]);
+    setMessages((prevMessages) => [...prevMessages, { fromSelf: true, message,data: new Date(Date.now()).toLocaleDateString(), time: new Date(Date.now()).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}]);
 
     try {
       const response = await axios.post(addMessageRoute, newMessage);
@@ -43,7 +42,7 @@ export default function Bottom({ userID, friendID, socket, setMessages }) {
           <Picker data={data} onEmojiSelect={addEmoji} />
         </div>
       )}
-      <span className="emoji" onClick={() => setShowEmojiPicker(!showEmojiPicker)}>😊</span>
+      <span className="emoji" onBlur={()=>{setShowEmojiPicker(false)}} onClick={() => setShowEmojiPicker(!showEmojiPicker)}>😊</span>
       <input
         type="text"
         placeholder="Type a message"

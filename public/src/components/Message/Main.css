@@ -2,6 +2,22 @@
     background-color: #f0f2f5;
     padding: 20px 10px;
 }
+.date-container{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.date-separator {
+    text-align: center;
+    margin: 10px 0;
+    padding: 5px 10px;
+    font-size: 14px;
+    color: gray;
+    background-color: white;
+    border-radius: 10px;
+  }
+  
 .message {
     position: relative;
     display: flex;

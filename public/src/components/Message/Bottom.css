@@ -16,6 +16,7 @@
   
   .emoji {
     margin-right: 10px;
+    cursor: pointer;
   }
   
   .message-input {
