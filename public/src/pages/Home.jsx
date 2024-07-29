@@ -37,9 +37,18 @@ export default function Home() {
     }
 
     socket.on('msg-receive', (message) => {
-      setMessages((prevMessages) => [...prevMessages, { fromSelf: false, message, data: new Date(Date.now()).toLocaleDateString(), time: new Date(Date.now()).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) }]);
-      setUpdateSidebar(updateSidebar + 1);
+      // Assuming you have the current user's ID in `currentUserId`
+      if (message.to === userID) {
+        setMessages((prevMessages) => [...prevMessages, { 
+          fromSelf: false, 
+          message: message.message, 
+          data: new Date(Date.now()).toLocaleDateString(), 
+          time: new Date(Date.now()).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) 
+        }]);
+        setUpdateSidebar(updateSidebar + 1);
+      }
     });
+    
 
     return () => {
       socket.off('msg-receive');
