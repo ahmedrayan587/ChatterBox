@@ -3,17 +3,18 @@ import SidebarItem from './SidebarItem'
 import { getAllUsersRoute } from '../utils/APIRoutes';
 import axios from 'axios';
 
-export default function Sidebar({ userID, setFriendID, setFriendUsername, setFriendImage }) {
+export default function Sidebar({ userID, setFriendID, setFriendUsername, setFriendImage, updateSidebar }) {
     const [searchQuery, setSearchQuery] = useState('');
     const [chatList, setChatList] = useState([]);
     useEffect(() =>{
         userID&&getAllUsers();
-    },[userID])
+    },[userID,updateSidebar])
     async function getAllUsers() {
         try {
             const response = await axios.get(`${getAllUsersRoute}/${userID}`);
             if (response.data.status == 200) {
               setChatList(response.data.users)
+              console.log(response.data.users);
             } else {
               console.error('Error posting piece data:',response);
             }

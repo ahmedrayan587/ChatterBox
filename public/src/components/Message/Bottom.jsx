@@ -5,7 +5,7 @@ import { addMessageRoute } from '../../utils/APIRoutes';
 import Picker from '@emoji-mart/react';
 import data from '@emoji-mart/data';
 
-export default function Bottom({ userID, friendID, socket, setMessages }) {
+export default function Bottom({ userID, friendID, socket, setMessages, updateSidebar, setUpdateSidebar }) {
   const [message, setMessage] = useState('');
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
   async function addMessage() {
@@ -15,10 +15,12 @@ export default function Bottom({ userID, friendID, socket, setMessages }) {
       message: message
     };
     setMessages((prevMessages) => [...prevMessages, { fromSelf: true, message,data: new Date(Date.now()).toLocaleDateString(), time: new Date(Date.now()).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}]);
+    
 
     try {
       const response = await axios.post(addMessageRoute, newMessage);
       if (response.status === 200) {
+        setUpdateSidebar(updateSidebar + 1);
         console.log('Message sent successfully:', response);
       } else {
         console.error('Error sending message:', response);

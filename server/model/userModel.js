@@ -22,6 +22,12 @@ const userSchema = new mongoose.Schema({
     required: true,
     min: 8,
   },
+  lastChat: {
+    // Add this field
+    type: Map,
+    of: Date,
+    default: {},
+  },
 });
 
 export default mongoose.model("User", userSchema);

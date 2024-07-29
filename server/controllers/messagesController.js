@@ -1,4 +1,5 @@
 import messageModel from "../model/messageModel.js";
+import User from "../model/userModel.js";
 
 export async function addMessage(req, res, next) {
   try {
@@ -8,11 +9,23 @@ export async function addMessage(req, res, next) {
       users: [from, to],
       sender: from,
     });
+
     if (!data)
       return res.json({
         status: 400,
-        msg: "Faild to add message to database.",
+        msg: "Failed to add message to database.",
       });
+
+    // Update last chat timestamp for both users
+    await User.updateOne(
+      { _id: from },
+      { $set: { [`lastChat.${to}`]: new Date() } }
+    );
+    await User.updateOne(
+      { _id: to },
+      { $set: { [`lastChat.${from}`]: new Date() } }
+    );
+
     return res.json({ status: 200, msg: "Message added successfully." });
   } catch (error) {
     next(error);

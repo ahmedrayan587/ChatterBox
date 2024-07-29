@@ -49,12 +49,26 @@ export async function login(req, res, next) {
 
 export async function getAllUsers(req, res, next) {
   try {
-    const users = await User.find({ _id: { $ne: req.params.id } }).select([
+    const userId = req.params.id;
+
+    // Fetch all users excluding the current user
+    const users = await User.find({ _id: { $ne: userId } }).select([
       "_id",
       "image",
       "username",
       "email",
+      "lastChat",
     ]);
+
+    // Sort users based on the last chat timestamp
+    users.sort((a, b) => {
+      const aLastChat = a.lastChat ? a.lastChat.get(userId) : null;
+      const bLastChat = b.lastChat ? b.lastChat.get(userId) : null;
+
+      // Convert timestamps to numbers (or use a default value if null)
+      return (bLastChat || 0) - (aLastChat || 0);
+    });
+
     return res.json({ status: 200, users });
   } catch (error) {
     next(error);

@@ -20,6 +20,7 @@ export default function Home() {
   const [friendImage, setFriendImage] = useState("");
   const [messages, setMessages] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
+  const [updateSidebar, setUpdateSidebar] = useState(0);
 
   
     const filteredChatList = messages.filter(item =>
@@ -37,6 +38,7 @@ export default function Home() {
 
     socket.on('msg-receive', (message) => {
       setMessages((prevMessages) => [...prevMessages, { fromSelf: false, message, data: new Date(Date.now()).toLocaleDateString(), time: new Date(Date.now()).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) }]);
+      setUpdateSidebar(updateSidebar + 1);
     });
 
     return () => {
@@ -46,15 +48,16 @@ export default function Home() {
 
   return (
     <div className='home-container'>
-      {friendUsername && <Header image={friendImage} name={friendUsername} setSearchQuery={setSearchQuery} />}
       <Sidebar 
         userID={userID} 
         setFriendID={setFriendID} 
         setFriendUsername={setFriendUsername} 
         setFriendImage={setFriendImage} 
+        updateSidebar={updateSidebar}
       />
+      {friendUsername && <Header image={friendImage} name={friendUsername} setSearchQuery={setSearchQuery} />}
       <Main userID={userID} friendID={friendID} messages={filteredChatList==[]?messages:filteredChatList} setMessages={setMessages} />
-      {friendUsername && <Bottom userID={userID} friendID={friendID} socket={socket} setMessages={setMessages} />}
+      {friendUsername && <Bottom userID={userID} friendID={friendID} socket={socket} setMessages={setMessages} updateSidebar={updateSidebar} setUpdateSidebar={setUpdateSidebar} />}
     </div>
   );
 }
