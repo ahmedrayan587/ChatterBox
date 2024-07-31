@@ -21,7 +21,6 @@ export default function Bottom({ userID, friendID, socket, setMessages, updateSi
       const response = await axios.post(addMessageRoute, newMessage);
       if (response.status === 200) {
         setUpdateSidebar(updateSidebar + 1);
-        console.log('Message sent successfully:', response);
       } else {
         console.error('Error sending message:', response);
       }

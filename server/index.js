@@ -44,7 +44,34 @@ io.on("connection", (socket) => {
     // Corrected the event name to "send-message"
     const sendUserSocket = global.onlineUsers.get(data.to);
     if (sendUserSocket) {
-      socket.to(sendUserSocket).emit("msg-receive", data.message); // Corrected "msg-recieve" to "msg-receive"
+      socket.to(sendUserSocket).emit("msg-receive", data); // Corrected "msg-recieve" to "msg-receive"
+    }
+  });
+  socket.on("call-user", (data) => {
+    const sendUserSocket = global.onlineUsers.get(data.to);
+    if (sendUserSocket) {
+      socket.to(sendUserSocket).emit("call-receive", data);
+    }
+  });
+
+  socket.on("make-answer", (data) => {
+    const sendUserSocket = global.onlineUsers.get(data.to);
+    if (sendUserSocket) {
+      socket.to(sendUserSocket).emit("answer-made", data);
+    }
+  });
+
+  socket.on("ice-candidate", (data) => {
+    const sendUserSocket = global.onlineUsers.get(data.to);
+    if (sendUserSocket) {
+      socket.to(sendUserSocket).emit("ice-candidate", data);
+    }
+  });
+
+  socket.on("reject-call", (data) => {
+    const sendUserSocket = global.onlineUsers.get(data.from);
+    if (sendUserSocket) {
+      socket.to(sendUserSocket).emit("call-rejected");
     }
   });
 });

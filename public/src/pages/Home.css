@@ -121,6 +121,10 @@
     margin-top: 5px;
     grid-area: date;
   }
+  .custom-toast{
+    text-align: center;
+    direction: ltr;
+  }
   @media (max-width:786px) {
     .home-container{
       display: flex;
@@ -130,8 +134,8 @@
       flex-direction: row;
       width: 100%;
     }
-    .search-header,.search-header input[type="text"]{
-      width: fit-content!important;
+    .search-header{
+      width: 100px!important;
     }
     .sidebar-container{
       height: 160px;
