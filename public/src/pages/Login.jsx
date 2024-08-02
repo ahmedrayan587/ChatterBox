@@ -11,7 +11,7 @@ import Cookies from 'js-cookie';
 import { loginRoute } from '../utils/APIRoutes';
 import { useNavigate } from 'react-router-dom';
 
-export default function Login({setUserImage}) {
+export default function Login() {
   const navigate = useNavigate();
   const [username,setUsername] = useState("");
   const [password,setPassword] = useState("");
@@ -51,8 +51,6 @@ async function fetchData() {
         theme:'light',
       });
       console.log('Piece data posted successfully:',response);
-      setUserImage(response.data.user.image);
-      //Cookies.set('userImage', response.data.user.image);
       Cookies.set('username', response.data.user.username);
       Cookies.set('userID', response.data.user._id);
       navigate('/home');

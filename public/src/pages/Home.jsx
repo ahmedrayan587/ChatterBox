@@ -10,6 +10,8 @@ import audio from '../../public/Xiaomi Ringtone - Sound Effect.mp3';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Call from '../components/Call/Call';
+import { getUserById } from '../utils/APIRoutes';
+import axios from 'axios';
 
 // Define peer connection configuration
 const peerConnectionConfig = {
@@ -24,9 +26,10 @@ const socket = io('http://localhost:5000', {
   withCredentials: true,
 });
 
-export default function Home({userImage}) {
+export default function Home() {
   const [userID, setUserID] = useState("");
   const [username, setUsername] = useState("");
+  const [userImage,setUserImage] = useState("");
   const [friendID, setFriendID] = useState("");
   const [friendUsername, setFriendUsername] = useState("");
   const [friendImage, setFriendImage] = useState("");
@@ -43,6 +46,19 @@ export default function Home({userImage}) {
   const [sideOn, setSideOn] = useState(true);
   const [callUsername, setCallUsername] = useState("");
   const [callImage, setCallImage] = useState("");
+
+  async function getUser() {
+    try {
+        const response = await axios.get(`${getUserById}/${userID}`);
+        if (response.data.status == 200) {
+          setUserImage(response.data.user.image)
+        } else {
+          console.error('Error posting piece data:',response);
+        }
+      } catch (error) {
+        console.error('Error during post request:', error);
+      }
+  }
   useEffect(() => {
     let timeInt;
     if (callStarted) {
@@ -63,6 +79,7 @@ export default function Home({userImage}) {
   useEffect(() => {
     setUsername(Cookies.get('username') || "");
     setUserID(Cookies.get('userID') || "");
+    userID&&getUser();
 
     if (userID) {
       socket.emit('add-user', userID);
@@ -108,7 +125,6 @@ export default function Home({userImage}) {
   }, [friendID]);
 
   async function callUser() {
-    setCallStarted(true);
     const stream = await navigator.mediaDevices.getUserMedia({ audio: true, video: false });
     localStreamRef.current.srcObject = stream;
 
@@ -132,7 +148,6 @@ export default function Home({userImage}) {
   }
 
   async function VideoCallUser() {
-    setCallStarted(true);
     const stream = await navigator.mediaDevices.getUserMedia({ audio: true, video: true });
     localStreamRef.current.srcObject = stream;
 
@@ -189,6 +204,7 @@ export default function Home({userImage}) {
 
     socket.on('answer-made', async (data) => {
       if (data.to === userID) {
+        setCallStarted(true);
         setMedia(data.media);
         setCallImage(data.toImage);
         setCallUsername(data.toUsername);
@@ -308,25 +324,7 @@ export default function Home({userImage}) {
           localStreamRef.current.srcObject.getTracks().forEach(track => track.stop());
           remoteStreamRef.current.srcObject.getTracks().forEach(track => track.stop());
           rejectCall(friendID);
-          peerConnection.current = new RTCPeerConnection(peerConnectionConfig);
-
-          peerConnection.current.onicecandidate = (event) => {
-            if (event.candidate) {
-              socket.emit('ice-candidate', { candidate: event.candidate, to: friendID });
-            }
-          };
-      
-          peerConnection.current.ontrack = (event) => {
-            console.log('Remote stream received', event.streams[0]);
-            remoteStreamRef.current.srcObject = event.streams[0];
-          };
-      
-          return () => {
-            if (peerConnection.current) {
-              peerConnection.current.close();
-              peerConnection.current = null;
-            }
-          };
+          rejectCall(userID);
         }} >
           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" className="bi bi-telephone-fill" viewBox="0 0 16 16">
             <path fillRule="evenodd" d="M1.885.511a1.745 1.745 0 0 1 2.61.163L6.29 2.98c.329.423.445.974.315 1.494l-.547 2.19a.68.68 0 0 0 .178.643l2.457 2.457a.68.68 0 0 0 .644.178l2.189-.547a1.75 1.75 0 0 1 1.494.315l2.306 1.794c.829.645.905 1.87.163 2.611l-1.034 1.034c-.74.74-1.846 1.065-2.877.702a18.6 18.6 0 0 1-7.01-4.42 18.6 18.6 0 0 1-4.42-7.009c-.362-1.03-.037-2.137.703-2.877z"/>
@@ -346,6 +344,8 @@ export default function Home({userImage}) {
                 </svg>}
       </button>
       <Sidebar 
+        username={username}
+        userImage={userImage}
         setSideOn={setSideOn}
         sideOn={sideOn}
         userID={userID} 

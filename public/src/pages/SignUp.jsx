@@ -8,7 +8,8 @@ import Button from '../components/Form/Button'
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import FormInputFile from '../components/Form/FormInputFile';
-import { registerRoute } from '../utils/APIRoutes';
+import Cookies from 'js-cookie';
+import { loginRoute, registerRoute } from '../utils/APIRoutes';
 import { useNavigate } from 'react-router-dom';
 
 
@@ -19,6 +20,26 @@ export default function SignUp() {
   const [username,setUsername] = useState("");
   const [email,setEmail] = useState("");
   const [password,setPassword] = useState("");
+
+  async function login() {
+  
+    try {
+      const response = await axios.post(loginRoute, {
+        username: username,
+        password: password,
+      });
+      if (response.data.status == 200) {
+        console.log('Piece data posted successfully:',response);
+        Cookies.set('username', response.data.user.username);
+        Cookies.set('userID', response.data.user._id);
+        navigate('/home');
+      } else {
+        console.error('Error posting piece data:',response);
+      }
+    } catch (error) {
+      console.error('Error during post request:', error);
+    }
+  };
 
 async function fetchData() {
     toast.loading("The process may take few seconds",{
@@ -55,7 +76,7 @@ async function fetchData() {
         progress: undefined,
         theme:'light',
       });
-      navigate('/login');
+      login();
     } else {
       console.error('Error posting piece data:', response);
       toast.dismiss();

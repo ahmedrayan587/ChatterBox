@@ -74,3 +74,20 @@ export async function getAllUsers(req, res, next) {
     next(error);
   }
 }
+
+export async function getUserById(req, res, next) {
+  try {
+    const { id } = req.params;
+
+    const user = await User.findOne({ _id: id }).select([
+      "_id",
+      "image",
+      "username",
+      "email",
+      "lastChat",
+    ]);
+    return res.json({ status: 200, user });
+  } catch (error) {
+    next(error);
+  }
+}
