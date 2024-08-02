@@ -8,6 +8,7 @@ import Login from './pages/Login';
 import Home from './pages/Home';
 
 export default function App() {
+  const [userImage, setUserImage] = useState(); 
   return (
     <>
     <ToastContainer 
@@ -25,8 +26,8 @@ export default function App() {
       <Router>
         <Routes>
           <Route path='/' element={<SignUp />} />
-          <Route path='/login' element={<Login />} />
-          <Route path='/home' element={<Home />} />
+          <Route path='/login' element={<Login setUserImage={setUserImage} />} />
+          <Route path='/home' element={<Home userImage={userImage} />} />
         </Routes>
       </Router>
     </>

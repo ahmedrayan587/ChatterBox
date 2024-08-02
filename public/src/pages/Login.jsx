@@ -4,13 +4,14 @@ import Form from '../components/Form/Form'
 import FormTitle from '../components/Form/FormTitle'
 import FormInput from '../components/Form/FormInput'
 import FormButton from '../components/Form/FormButton'
+import Button from '../components/Form/Button'
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Cookies from 'js-cookie';
 import { loginRoute } from '../utils/APIRoutes';
 import { useNavigate } from 'react-router-dom';
 
-export default function Login() {
+export default function Login({setUserImage}) {
   const navigate = useNavigate();
   const [username,setUsername] = useState("");
   const [password,setPassword] = useState("");
@@ -50,6 +51,7 @@ async function fetchData() {
         theme:'light',
       });
       console.log('Piece data posted successfully:',response);
+      setUserImage(response.data.user.image);
       //Cookies.set('userImage', response.data.user.image);
       Cookies.set('username', response.data.user.username);
       Cookies.set('userID', response.data.user._id);
@@ -70,11 +72,14 @@ async function fetchData() {
     fetchData();
   }
   return (
-    <Form key={"login"} submitFunction={submit} >
-    <FormTitle key={"title"} name="Login"/>
-    <FormInput key={"username"} name="Username" type="text" minLength={3} maxLength={20} setValues={setUsername}/>
-    <FormInput key={"password"} name="Password" type="password" minLength={8} maxLength={50} setValues={setPassword}/>
-    <FormButton key={"submit"} name="Submit"/> 
-  </Form>
+    <div className='d-flex justify-content-center align-items-center flex-column'>
+      <Form key={"login"} submitFunction={submit} >
+        <FormTitle key={"title"} name="Login"/>
+        <FormInput key={"username"} name="Username" type="text" minLength={3} maxLength={20} setValues={setUsername}/>
+        <FormInput key={"password"} name="Password" type="password" minLength={8} maxLength={50} setValues={setPassword}/>
+        <FormButton key={"submit"} name="Submit"/> 
+      </Form>
+      <Button name={"SignUp"} path={"/"} />
+    </div>
   )
 }

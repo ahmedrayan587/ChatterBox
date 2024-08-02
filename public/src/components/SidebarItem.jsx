@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { getAllMessagesRoute } from '../utils/APIRoutes';
 import axios from 'axios';
 
-export default function SidebarItem({userID, id,setFriendID, setFriendUsername, setFriendImage, image, name}) {
+export default function SidebarItem({userID, id,setFriendID, setFriendUsername, setFriendImage, image, name, setSideOn, sideOn}) {
   const [lastMessage, setLastMessage] = useState();
   useEffect(() => {
     async function getAllMessages() {
@@ -24,6 +24,8 @@ export default function SidebarItem({userID, id,setFriendID, setFriendUsername, 
   }, [userID,id,lastMessage]);
   return (
     <div className="chat-item" onClick={()=>{
+      document.querySelector('.sidebar-container').classList.add('left-out');
+      setSideOn(!sideOn);
       setFriendID(id);
       setFriendImage(image);
       setFriendUsername(name);

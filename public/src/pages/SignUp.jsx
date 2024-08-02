@@ -4,6 +4,7 @@ import Form from '../components/Form/Form'
 import FormTitle from '../components/Form/FormTitle'
 import FormInput from '../components/Form/FormInput'
 import FormButton from '../components/Form/FormButton'
+import Button from '../components/Form/Button'
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import FormInputFile from '../components/Form/FormInputFile';
@@ -71,13 +72,16 @@ function submit(event){
   fetchData();   
 }
   return (
-    <Form key={"register"} submitFunction={submit} >
-      <FormTitle key={"title"} name="SignUp"/>
-      <FormInputFile key={"image"} name={"Add Your Image"} setValues={setImage} type={"image"} />
-      <FormInput key={"username"} name="Username" type="text" minLength={3} maxLength={20} setValues={setUsername}/>
-      <FormInput key={"email"} name="Email" type="email" minLength={3} maxLength={50} setValues={setEmail}/>
-      <FormInput key={"password"} name="Password" type="password" minLength={8} maxLength={50} setValues={setPassword}/>
-      <FormButton key={"submit"} name="Submit"/> 
-    </Form>
+    <div className='d-flex justify-content-center align-items-center flex-column'>
+      <Form key={"register"} submitFunction={submit} >
+        <FormTitle key={"title"} name="SignUp"/>
+        <FormInputFile key={"image"} name={"Add Your Image"} setValues={setImage} type={"image"} />
+        <FormInput key={"username"} name="Username" type="text" minLength={3} maxLength={20} setValues={setUsername}/>
+        <FormInput key={"email"} name="Email" type="email" minLength={3} maxLength={50} setValues={setEmail}/>
+        <FormInput key={"password"} name="Password" type="password" minLength={8} maxLength={50} setValues={setPassword}/>
+        <FormButton key={"submit"} name="Submit"/> 
+      </Form>
+      <Button name={"Login"} path={"/login"} />
+    </div>
   )
 }

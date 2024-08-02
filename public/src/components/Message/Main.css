@@ -1,20 +1,21 @@
 .main-container{
-    background-color: #f0f2f57f;
     position: relative;
     padding: 10px 20px;
 }
 .chat-text {
     font-size: 3em;
-    color: #f6e01b;
+    color: #f6e01b9c;
     font-weight: bold;
     position: fixed;
-    left: 65%;
+    left: 50%;
     top: 50%;
     transform: translate(-50%,-50%);
     z-index: -1;
 }
 .chat-text svg{
     margin: 0 10px;
+    width: 70px;
+    height: 70px;
 }
 .date-container{
     width: 100%;

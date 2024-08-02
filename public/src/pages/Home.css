@@ -1,26 +1,63 @@
 .home-container{
-    display: grid;
+    display: flex;
     width: 100dvw;
     height: 100dvh;
-    grid-template-columns: minmax(30% , auto) 1fr;
-    grid-template-rows: auto 1fr auto;
+}
+.toggle-button{
+  position: fixed;
+  left: 0;
+  top: 25px;
+  border: none;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+  height: 50px;
+  width: 50px;
+  z-index: 50;
+  color: black;
+  background-color: rgba(255, 255, 255, 0.69);
+}
+.sidebar-container{
+  border-right: 1px solid #ddd;
+  width: 300px;
+  height: 100dvh;
+  position: fixed;
+  left: 0;
+  top: 0;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  background-color: white;
+  transition: 0.5s;
+  z-index: 5;
+}
+.left-out{
+  left: -300px;
+}
+.content-container{
+  width: 100%;
+  height: 100dvh;
+  position: fixed;
+  left: 0;
+  top: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
 }
 .profile {
-    grid-area: 1/2/2/3;
-  }
-.sidebar-container{
-    border-right: 1px solid #ddd;
-    grid-area: 1/1/10/2;
-    overflow-y: scroll;
-    overflow-x: hidden;
+  width: 100%;
+  height: 100px;
 }
+
 .main-container{
-    grid-area: 2/2/9/3;
-    overflow-y: scroll;
-    overflow-x: hidden;
+  width: 100%;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  height: calc(100% - 200px);
 }
 .bottom-container{
-    grid-area: 9/2/10/3;
+  width: 100%;
+  height: 100px;
 }
 
 .chat-container {
@@ -40,6 +77,7 @@
     justify-content: center;
     align-items: center;
     gap: 10px;
+    height: 60px;
   }
   
   .search-bar input[type="text"] {
@@ -61,12 +99,13 @@
     border-radius: 50%;
     border: none;
     background-color: transparent;
+    color: crimson;
   }
 
   .chat-list {
     padding: 10px;
     overflow-y: auto;
-    height: 80%;
+    height: calc(100% - 60px);
     overflow-x: hidden;
   }
   
@@ -126,50 +165,20 @@
     direction: ltr;
   }
   @media (max-width:786px) {
-    .home-container{
-      display: flex;
-      justify-content: start;
-      align-items: start;
-      flex-wrap: wrap;
-      flex-direction: row;
-      width: 100%;
-    }
     .search-header{
       width: 100px!important;
     }
-    .sidebar-container{
-      height: 160px;
+    .content-container{
       width: 100%;
-      overflow: hidden;
-    }
-    .sidebar-container .chat-list{
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      overflow-y: hidden;
-      overflow-x: scroll;
-      flex-wrap: wrap;
-      flex-direction: column;
-      width: 100%;
-    }
-    .profile {
-      height: 100px;
-      width: 100%;
-    }
-    .main-container{
-      height: calc(100% - 360px);
-      width: 100%;
-    }
-    .bottom-container{
-      width: 100%;
-      height: 100px;
-    }
-    .chat-input{
-      width: 100%;
+      position: fixed;
+      left: 0;
+      top: 0;
     }
     .chat-text {
-      font-size: 2rem!important;
-      left: 50%!important;
-      display: none;
+      font-size: 1.5rem!important;
     }
+    .chat-text svg{
+      width: 40px!important;
+      height: 40px!important;;
+  }
   }

@@ -6,6 +6,7 @@
     border-top: 1px solid #ddd;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     position: relative;
+    width: 100%;
   }
 
   .emoji-picker {
