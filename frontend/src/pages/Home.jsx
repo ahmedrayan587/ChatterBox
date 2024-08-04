@@ -10,7 +10,7 @@ import audio from '../../public/Xiaomi Ringtone - Sound Effect.mp3';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Call from '../components/Call/Call';
-import { getUserById } from '../utils/APIRoutes';
+import { host, getUserById } from '../utils/APIRoutes';
 import axios from 'axios';
 
 // Define peer connection configuration
@@ -22,7 +22,7 @@ const peerConnectionConfig = {
   ]
 };
 
-const socket = io('http://localhost:5000', {
+const socket = io({host}, {
   withCredentials: true,
 });
 
